@@ -1,8 +1,8 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 
-const presetSpeeds = [1.25, 1.5, 1.75, 2, 2.5, 3];
+const presetSpeeds = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3];
 const quickExamples = [
   { label: "Podcast", hours: 0, minutes: 48, seconds: 0 },
   { label: "Course", hours: 2, minutes: 30, seconds: 0 },
@@ -25,11 +25,27 @@ function formatDuration(totalSeconds: number): string {
   return `${seconds}s`;
 }
 
+function formatFinishTime(timestamp: number | null, durationSeconds: number): string {
+  if (!timestamp || durationSeconds <= 0) return "--";
+
+  const finishTime = new Date(timestamp + durationSeconds * 1000);
+  return finishTime.toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit"
+  });
+}
+
 export default function Home() {
   const [hours, setHours] = useState("2");
   const [minutes, setMinutes] = useState("30");
   const [seconds, setSeconds] = useState("0");
   const [speed, setSpeed] = useState(1.5);
+  const [copied, setCopied] = useState(false);
+  const [currentTime, setCurrentTime] = useState<number | null>(null);
+
+  useEffect(() => {
+    setCurrentTime(Date.now());
+  }, []);
 
   const originalSeconds = useMemo(
     () => toNumber(hours) * 3600 + toNumber(minutes) * 60 + toNumber(seconds),
@@ -38,9 +54,11 @@ export default function Home() {
 
   const newDuration = originalSeconds > 0 && speed > 0 ? originalSeconds / speed : 0;
   const savedTime = Math.max(0, originalSeconds - newDuration);
+  const savedPercent = originalSeconds > 0 ? (savedTime / originalSeconds) * 100 : 0;
+  const finishTime = formatFinishTime(currentTime, newDuration);
   const summary = `At ${speed}x speed, ${formatDuration(originalSeconds)} becomes ${formatDuration(
     newDuration
-  )}. You save ${formatDuration(savedTime)}.`;
+  )}. You save ${formatDuration(savedTime)} (${savedPercent.toFixed(1)}%).`;
 
   const rows = presetSpeeds.map((preset) => ({
     speed: preset,
@@ -64,16 +82,17 @@ export default function Home() {
       <section className="hero compact-hero">
         <div className="hero-copy compact-copy">
           <p className="eyebrow">Playback speed calculator</p>
-          <h1>Calculate playback time instantly</h1>
+          <h1>Playback Speed Calculator</h1>
           <p className="lead">
-            Enter a video, podcast, course, or audiobook length. Pick a speed. Get the new duration
-            and time saved without pressing a calculate button.
+            Calculate playback time instantly for audiobooks, podcasts, online courses, and videos.
+            Enter the original length, choose a speed, and see the new duration, time saved, and
+            finish time.
           </p>
         </div>
 
         <section className="calculator-panel primary-tool" id="calculator" aria-label="Playback speed calculator">
           <div className="tool-heading">
-            <h2>Playback Speed Calculator</h2>
+            <h2>Calculate playback time</h2>
             <p>Live result. No signup. No upload.</p>
           </div>
 
@@ -155,9 +174,33 @@ export default function Home() {
               <span>Time saved</span>
               <strong>{formatDuration(savedTime)}</strong>
             </article>
+            <article>
+              <span>Saved percent</span>
+              <strong>{savedPercent.toFixed(1)}%</strong>
+            </article>
+            <article>
+              <span>Finish time</span>
+              <strong>{finishTime}</strong>
+            </article>
           </div>
 
           <p className="result-sentence">{summary}</p>
+
+          <button
+            className="copy-button"
+            type="button"
+            onClick={async () => {
+              try {
+                await navigator.clipboard.writeText(`${summary} Finish time: ${finishTime}.`);
+                setCopied(true);
+                window.setTimeout(() => setCopied(false), 1600);
+              } catch {
+                setCopied(false);
+              }
+            }}
+          >
+            {copied ? "Copied" : "Copy result"}
+          </button>
 
           <div className="quick-examples" aria-label="Quick examples">
             {quickExamples.map((example) => (
@@ -182,8 +225,9 @@ export default function Home() {
           <p className="eyebrow">Common speeds</p>
           <h2>Mainstream playback speeds</h2>
           <p>
-            Most people compare 1.25x, 1.5x, 1.75x, 2x, 2.5x, and 3x. Use the short table below for
-            a quick view, then adjust the custom speed if your player uses a different value.
+            Most people compare 1.25x, 1.5x, 1.75x, 2x, 2.5x, and 3x for faster listening. The
+            table also includes 0.75x and 1x, which are useful when you need a baseline or slower
+            playback.
           </p>
         </div>
         <div className="table-wrap">
@@ -213,14 +257,16 @@ export default function Home() {
           <h2>What is a playback speed calculator?</h2>
           <p>
             It converts the original length of an audiobook, podcast, online course, or video into
-            the actual time it takes at a faster or slower playback speed.
+            the actual time it takes at a faster or slower playback speed. The result updates in the
+            browser, so you do not need to upload a file or press a calculate button.
           </p>
         </div>
         <div>
           <h2>How the formula works</h2>
           <p>
             New duration equals original duration divided by playback speed. A 60 minute podcast at
-            1.5x takes 40 minutes, saving 20 minutes.
+            1.5x takes 40 minutes, saving 20 minutes. Time saved equals original duration minus the
+            new duration.
           </p>
         </div>
       </section>
@@ -239,6 +285,16 @@ export default function Home() {
         <details>
           <summary>Does this work for podcasts and audiobooks?</summary>
           <p>Yes. The same formula works for videos, courses, podcasts, and audiobooks.</p>
+        </details>
+        <details>
+          <summary>How long does a 10-hour audiobook take at 1.25x?</summary>
+          <p>A 10-hour audiobook at 1.25x speed takes 8 hours. You save 2 hours.</p>
+        </details>
+        <details>
+          <summary>Does this calculator work for YouTube videos?</summary>
+          <p>
+            Yes. Enter the YouTube video length, then choose the playback speed you plan to use.
+          </p>
         </details>
       </section>
 

@@ -34,15 +34,17 @@ H1：
 - 什么是播放速度计算器。
 - 适合哪些场景：有声书、播客、课程、视频。
 - 如何计算播放后的实际时长。
-- 1.25x、1.5x、2x 分别适合什么场景。
+- 0.75x、1x、1.25x、1.5x、1.75x、2x、2.5x、3x 的对比结果。
+- 节省百分比和预计完成时间。
 - 为什么结果在本地计算，不上传数据。
 
 ## FAQ（常见问题）
 
 - What is a playback speed calculator?
-- How do I calculate time saved at 1.5x speed?
+- How long is 1 hour at 1.5x speed?
+- How long is a 2-hour video at 2x speed?
+- Does this work for podcasts and audiobooks?
 - How long does a 10-hour audiobook take at 1.25x?
-- Is 2x speed good for podcasts?
 - Does this calculator work for YouTube videos?
 
 说明：FAQ 用于帮助用户理解，不把 `FAQPage`（常见问题结构化数据）当作排名策略。
@@ -64,9 +66,9 @@ H1：
 
 首页链接到：
 
-- `audiobook speed calculator`（有声书播放速度计算器）
-- `podcast time calculator`（播客时长计算器）
-- `audiobook time calculator`（有声书时长计算器）
+- 当前第一版只链接已存在页面和页内锚点，避免生成死链。
+- 已存在链接：Calculator、Guide、FAQ、Privacy、Terms、Contact。
+- 后续创建细分页后，再从首页链接到 `audiobook speed calculator`（有声书播放速度计算器）、`podcast time calculator`（播客时长计算器）、`audiobook time calculator`（有声书时长计算器）。
 
 细分页链接回首页，并互相链接相关场景。
 
