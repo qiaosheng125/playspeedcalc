@@ -31,10 +31,16 @@ function formatResultDuration(totalSeconds: number): string {
   const minutes = Math.floor((rounded % 3600) / 60);
   const seconds = rounded % 60;
 
+  if (hours > 0 && minutes === 0 && seconds === 0) return `${hours}h`;
   if (hours > 0) return `${hours}h ${minutes}m`;
   if (minutes > 0 && seconds === 0) return `${minutes}m`;
   if (minutes > 0) return `${minutes}m ${seconds}s`;
   return `${seconds}s`;
+}
+
+function hasSecondsInResult(totalSeconds: number): boolean {
+  const rounded = Math.max(0, Math.round(totalSeconds));
+  return rounded % 60 !== 0;
 }
 
 function formatFinishTime(timestamp: number | null, durationSeconds: number): string {
@@ -52,18 +58,70 @@ function clampSpeed(value: number): number {
   return Math.max(0.25, Math.round(value * 10) / 10);
 }
 
-function getEasterEgg(speed: number): string {
-  if (speed < 0.4) return "0.3x mode: The audiobook is now a sleepy cloud.";
-  if (speed < 0.6) return "0.5x mode: Tiny snails are taking careful notes.";
-  if (speed < 0.8) return "0.7x mode: Cozy mode, but the blanket has a blanket.";
-  if (speed < 1) return `${speed}x mode: Slow and steady.`;
-  if (speed === 1.5) return "1.5x mode: A comfortable speed boost.";
-  if (speed === 2) return "2x mode: Half the time, same content.";
-  if (speed < 2.5 && speed > 2) return `${speed}x mode: Your queue is getting nervous.`;
-  if (speed < 3 && speed >= 2.5) return `${speed}x mode: The timeline is folding politely.`;
-  if (speed < 4 && speed >= 3) return `${speed}x mode: Fast lane unlocked.`;
-  if (speed < 5 && speed >= 4) return `${speed}x mode: The narrator has entered comet mode.`;
-  if (speed >= 5) return `${speed}x mode: This is no longer listening, this is teleporting.`;
+function getEasterEggOptions(speed: number): string[] {
+  if (speed < 0.4) {
+    return [
+      "Tiny snails are taking careful notes.",
+      "The episode is wearing soft slippers.",
+      "The narrator found the slow lane and brought snacks."
+    ];
+  }
+
+  if (speed < 0.6) {
+    return [
+      "Tiny snails are taking careful notes.",
+      "The episode is wearing soft slippers.",
+      "Every word gets a tiny spotlight."
+    ];
+  }
+
+  if (speed < 0.8) {
+    return [
+      "Tiny snails are taking careful notes.",
+      "The episode is wearing soft slippers.",
+      "This chapter is taking the scenic route."
+    ];
+  }
+
+  if (speed >= 2.5 && speed < 3) {
+    return [
+      "Your watch just raised one eyebrow.",
+      "The progress bar just learned parkour.",
+      "Minutes are packing themselves into smaller boxes."
+    ];
+  }
+
+  if (speed >= 4 && speed < 5) {
+    return [
+      "The progress bar just learned parkour.",
+      "The chapter has become a tiny lightning bolt.",
+      "The narrator is now speedrunning the syllabus."
+    ];
+  }
+
+  if (speed >= 5) {
+    return [
+      "This is no longer listening, this is teleporting.",
+      "The chapter has become a tiny lightning bolt.",
+      "Please keep your bookmarks inside the vehicle."
+    ];
+  }
+
+  return [];
+}
+
+function pickEasterEgg(options: string[]): string {
+  if (options.length === 0) return "";
+  return options[Math.floor(Math.random() * options.length)];
+}
+
+function getEasterEggKey(speed: number): string {
+  if (speed < 0.4) return "slowest";
+  if (speed < 0.6) return "very-slow";
+  if (speed < 0.8) return "slow";
+  if (speed >= 2.5 && speed < 3) return "quick";
+  if (speed >= 4 && speed < 5) return "very-fast";
+  if (speed >= 5) return "fastest";
   return "";
 }
 
@@ -74,12 +132,18 @@ export default function Home() {
   const [speed, setSpeed] = useState(1.5);
   const [copied, setCopied] = useState(false);
   const [currentTime, setCurrentTime] = useState<number | null>(null);
+  const [easterEgg, setEasterEgg] = useState("");
+  const easterEggKey = getEasterEggKey(speed);
 
   useEffect(() => {
     setCurrentTime(Date.now());
     const timer = window.setInterval(() => setCurrentTime(Date.now()), 30_000);
     return () => window.clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    setEasterEgg(pickEasterEgg(getEasterEggOptions(speed)));
+  }, [easterEggKey, speed]);
 
   const originalSeconds = useMemo(
     () => toNumber(hours) * 3600 + toNumber(minutes) * 60 + toNumber(seconds),
@@ -101,7 +165,6 @@ export default function Home() {
       : `At ${speed}x speed, ${formatDuration(originalSeconds)} becomes ${formatDuration(
           newDuration
         )}. You save ${formatDuration(timeDifference)} (${savedPercent.toFixed(1)}%).`;
-  const easterEgg = getEasterEgg(speed);
 
   const rows = presetSpeeds.map((preset) => ({
     speed: preset,
@@ -224,11 +287,15 @@ export default function Home() {
           <div className="result-grid compact-results" aria-live="polite">
             <article>
               <span>New duration</span>
-              <strong>{formatResultDuration(newDuration)}</strong>
+              <strong className={hasSecondsInResult(newDuration) ? "with-seconds" : ""}>
+                {formatResultDuration(newDuration)}
+              </strong>
             </article>
             <article>
               <span>{isSameSpeed ? "Time difference" : isSlower ? "Extra time" : "Time saved"}</span>
-              <strong>{formatResultDuration(timeDifference)}</strong>
+              <strong className={hasSecondsInResult(timeDifference) ? "with-seconds" : ""}>
+                {formatResultDuration(timeDifference)}
+              </strong>
             </article>
             <article>
               <span>{isSameSpeed ? "Change percent" : isSlower ? "Longer percent" : "Saved percent"}</span>

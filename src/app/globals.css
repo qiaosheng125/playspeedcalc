@@ -370,9 +370,18 @@ input:focus {
 .result-grid strong {
   color: var(--green);
   display: block;
-  font-size: clamp(22px, 2.6vw, 30px);
+  font-size: clamp(18px, 1.85vw, 25px);
   line-height: 1.05;
+  overflow-wrap: normal;
+  text-wrap: balance;
   white-space: nowrap;
+  word-break: keep-all;
+}
+
+.result-grid strong.with-seconds {
+  font-size: clamp(18px, 1.75vw, 24px);
+  overflow-wrap: anywhere;
+  white-space: normal;
 }
 
 .result-sentence {
