@@ -39,4 +39,5 @@
 - 新建项目。
 - Website URL（网站地址）填写：`https://www.playspeedcalc.net`。
 - 项目名称可填：`PlaySpeedCalc`。
-- 拿到 Project ID（项目 ID）后填入 `NEXT_PUBLIC_CLARITY_PROJECT_ID`。
+- Project ID（项目 ID）：`wxsiknpktp`。
+- 在 `Vercel` 环境变量中填入：`NEXT_PUBLIC_CLARITY_PROJECT_ID=wxsiknpktp`。
