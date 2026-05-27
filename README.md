@@ -48,4 +48,5 @@
 - DNS 优先：`Cloudflare`（DNS 和基础防护服务）
 - Cloudflare Nameserver：`everton.ns.cloudflare.com`、`mona.ns.cloudflare.com`
 - 代码托管：`GitHub`（代码仓库）
+- GitHub 仓库：https://github.com/qiaosheng125/playspeedcalc
 - 域名候选：见 `docs/domain.md`

@@ -43,7 +43,7 @@
 
 ## 部署
 
-- [ ] GitHub 仓库创建。
+- [x] GitHub 仓库创建：https://github.com/qiaosheng125/playspeedcalc
 - [ ] Vercel 项目创建。
 - [ ] 环境变量检查。
 - [x] 域名 DNS 已在阿里云切到 Cloudflare。
