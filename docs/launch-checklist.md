@@ -38,7 +38,7 @@
 - [x] `GSC`（谷歌搜索控制台）已添加 `playspeedcalc.net` 域名资源。
 - [ ] `Bing Webmaster`（必应站长工具）准备提交。
 - [x] `GA`（谷歌分析）接入成功，Measurement ID：`G-4CYCN9S7W9`。
-- [ ] `Clarity`（微软热力图）Project ID 已获取：`wxsiknpktp`，待填入 Vercel 环境变量并重新部署。
+- [x] `Clarity`（微软热力图）接入成功，Project ID：`wxsiknpktp`。
 - [ ] 核心计算事件可记录。
 
 ## 部署
