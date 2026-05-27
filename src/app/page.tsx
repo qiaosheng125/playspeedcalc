@@ -25,6 +25,19 @@ function formatDuration(totalSeconds: number): string {
   return `${seconds}s`;
 }
 
+function formatResultDuration(totalSeconds: number): string {
+  const rounded = Math.max(0, Math.round(totalSeconds));
+  const hours = Math.floor(rounded / 3600);
+  const minutes = Math.floor((rounded % 3600) / 60);
+  const seconds = rounded % 60;
+
+  if (hours > 0 && seconds === 0) return `${hours}h ${minutes}m`;
+  if (hours > 0) return `${hours}h ${minutes}m ${seconds}s`;
+  if (minutes > 0 && seconds === 0) return `${minutes}m`;
+  if (minutes > 0) return `${minutes}m ${seconds}s`;
+  return `${seconds}s`;
+}
+
 function formatFinishTime(timestamp: number | null, durationSeconds: number): string {
   if (!timestamp || durationSeconds <= 0) return "--";
 
@@ -45,6 +58,8 @@ export default function Home() {
 
   useEffect(() => {
     setCurrentTime(Date.now());
+    const timer = window.setInterval(() => setCurrentTime(Date.now()), 30_000);
+    return () => window.clearInterval(timer);
   }, []);
 
   const originalSeconds = useMemo(
@@ -168,11 +183,11 @@ export default function Home() {
           <div className="result-grid compact-results" aria-live="polite">
             <article>
               <span>New duration</span>
-              <strong>{formatDuration(newDuration)}</strong>
+              <strong>{formatResultDuration(newDuration)}</strong>
             </article>
             <article>
               <span>Time saved</span>
-              <strong>{formatDuration(savedTime)}</strong>
+              <strong>{formatResultDuration(savedTime)}</strong>
             </article>
             <article>
               <span>Saved percent</span>

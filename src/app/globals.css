@@ -178,6 +178,12 @@ h2 {
   gap: 8px;
 }
 
+.speed-buttons {
+  display: grid;
+  grid-template-columns: repeat(8, minmax(52px, 1fr));
+  width: 100%;
+}
+
 .scenario-tabs button,
 .speed-buttons button {
   background: #f2f5fa;
@@ -192,6 +198,11 @@ h2 {
     border-color 0.16s ease,
     color 0.16s ease,
     transform 0.16s ease;
+}
+
+.speed-buttons button {
+  min-width: 0;
+  padding: 9px 8px;
 }
 
 .scenario-tabs button:hover,
@@ -308,8 +319,9 @@ input:focus {
 .result-grid strong {
   color: var(--green);
   display: block;
-  font-size: clamp(26px, 4vw, 40px);
+  font-size: clamp(24px, 3.2vw, 34px);
   line-height: 1.05;
+  white-space: nowrap;
 }
 
 .result-sentence {
@@ -472,6 +484,17 @@ footer div {
 
   nav {
     flex-wrap: wrap;
+  }
+
+  .speed-buttons {
+    display: flex;
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .speed-buttons button {
+    flex: 0 0 72px;
   }
 
   .input-grid,
