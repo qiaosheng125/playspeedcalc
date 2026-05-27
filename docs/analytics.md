@@ -31,7 +31,8 @@
 - 创建 Web data stream（网页数据流）。
 - Website URL（网站地址）填写：`https://www.playspeedcalc.net`。
 - Stream name（数据流名称）可填：`PlaySpeedCalc`。
-- 拿到 `Measurement ID`（衡量 ID）后填入 `NEXT_PUBLIC_GA_MEASUREMENT_ID`。
+- `Measurement ID`（衡量 ID）：`G-4CYCN9S7W9`。
+- 在 `Vercel` 环境变量中填入：`NEXT_PUBLIC_GA_MEASUREMENT_ID=G-4CYCN9S7W9`。
 
 ## Clarity 操作记录
 
