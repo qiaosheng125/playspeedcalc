@@ -84,4 +84,5 @@
 - 部署平台：`Vercel`（部署平台）。
 - Vercel 临时域名：`https://playspeedcalc.vercel.app`。
 - 正式域名：`https://playspeedcalc.net`。
-- 状态：2026-05-28 已可正常访问，HTTPS 正常。
+- 主访问地址：`https://www.playspeedcalc.net`。
+- 状态：2026-05-28 已可正常访问，HTTPS 正常；根域名会跳转到 `www` 版本。

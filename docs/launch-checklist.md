@@ -26,9 +26,9 @@
 - [ ] title 正确。
 - [ ] description 正确。
 - [ ] H1 正确。
-- [ ] canonical 正确。
-- [ ] sitemap.xml 可访问。
-- [ ] robots.txt 可访问。
+- [x] canonical 正确，统一到 `https://www.playspeedcalc.net`。
+- [x] sitemap.xml 可访问。
+- [x] robots.txt 可访问。
 - [ ] 页面正文可索引。
 - [ ] 内链可点击。
 - [ ] Privacy / Terms / Contact 可访问。
@@ -49,7 +49,7 @@
 - [x] 域名 DNS 已在阿里云切到 Cloudflare。
 - [x] Cloudflare Nameserver 设置为 `everton.ns.cloudflare.com` 和 `mona.ns.cloudflare.com`。
 - [x] Cloudflare DNS 配置。
-- [x] 正式域名可访问：https://playspeedcalc.net
+- [x] 正式域名可访问：https://playspeedcalc.net，并跳转到 `https://www.playspeedcalc.net`。
 - [x] HTTPS 正常。
 
 ## 上线后

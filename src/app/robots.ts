@@ -6,6 +6,6 @@ export default function robots(): MetadataRoute.Robots {
       userAgent: "*",
       allow: "/"
     },
-    sitemap: "https://playspeedcalc.net/sitemap.xml"
+    sitemap: "https://www.playspeedcalc.net/sitemap.xml"
   };
 }

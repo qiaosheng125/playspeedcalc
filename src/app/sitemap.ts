@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 
-const baseUrl = "https://playspeedcalc.net";
+const baseUrl = "https://www.playspeedcalc.net";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   return ["", "/privacy", "/terms", "/contact"].map((path) => ({
