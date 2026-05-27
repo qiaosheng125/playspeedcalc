@@ -36,7 +36,7 @@
 ## 数据
 
 - [x] `GSC`（谷歌搜索控制台）已添加 `playspeedcalc.net` 域名资源。
-- [ ] `Bing Webmaster`（必应站长工具）准备提交。
+- [x] `Bing Webmaster`（必应站长工具）已添加并验证网站。
 - [x] `GA`（谷歌分析）接入成功，Measurement ID：`G-4CYCN9S7W9`。
 - [x] `Clarity`（微软热力图）接入成功，Project ID：`wxsiknpktp`。
 - [ ] 核心计算事件可记录。
@@ -55,7 +55,8 @@
 ## 上线后
 
 - [x] 提交 sitemap 到 GSC：`https://www.playspeedcalc.net/sitemap.xml`。
-- [ ] 提交 sitemap 到 Bing Webmaster。
+- [x] GSC 已请求首页编入索引：`https://www.playspeedcalc.net/`。
+- [x] 提交 sitemap 到 Bing Webmaster：`https://www.playspeedcalc.net/sitemap.xml`。
 - [ ] 手动访问所有页面。
 - [ ] 手机访问检查。
 - [x] 记录上线日期：2026-05-28。
