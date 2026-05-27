@@ -180,7 +180,7 @@ h2 {
 
 .speed-buttons {
   display: grid;
-  grid-template-columns: repeat(8, minmax(52px, 1fr));
+  grid-template-columns: repeat(6, minmax(56px, 1fr));
   width: 100%;
 }
 
@@ -202,7 +202,7 @@ h2 {
 
 .speed-buttons button {
   min-width: 0;
-  padding: 9px 8px;
+  padding: 9px 6px;
 }
 
 .scenario-tabs button:hover,
@@ -270,7 +270,7 @@ input:focus {
 .speed-row {
   align-items: end;
   display: grid;
-  gap: 16px;
+  gap: 10px;
   grid-template-columns: minmax(0, 1fr) auto;
   margin-top: 18px;
 }
@@ -278,8 +278,42 @@ input:focus {
 .speed-input {
   align-items: center;
   display: flex;
-  gap: 8px;
+  gap: 0;
   max-width: 100%;
+}
+
+.speed-input input {
+  appearance: textfield;
+}
+
+.speed-input input::-webkit-outer-spin-button,
+.speed-input input::-webkit-inner-spin-button {
+  appearance: none;
+  margin: 0;
+}
+
+.speed-input button {
+  align-items: center;
+  background: #f2f5fa;
+  border: 1px solid #cfd7e6;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  font-size: 18px;
+  font-weight: 800;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 36px;
+}
+
+.speed-input button:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.speed-input button:last-child {
+  border-radius: 0 6px 6px 0;
 }
 
 .speed-input span {
@@ -289,11 +323,17 @@ input:focus {
 
 .custom-speed {
   min-width: 0;
-  width: 128px;
+  width: 154px;
+  white-space: nowrap;
 }
 
 .custom-speed input {
-  padding: 0 10px;
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  padding: 0 8px;
+  text-align: center;
+  width: 82px;
 }
 
 .speed-buttons {
@@ -308,13 +348,14 @@ input:focus {
 }
 
 .compact-results {
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .result-grid article {
   background: #f6f9ff;
   border: 1px solid #d9e4fb;
   border-radius: 8px;
+  min-width: 0;
   min-height: 106px;
   padding: 16px;
 }
@@ -329,7 +370,7 @@ input:focus {
 .result-grid strong {
   color: var(--green);
   display: block;
-  font-size: clamp(24px, 3.2vw, 34px);
+  font-size: clamp(22px, 2.6vw, 30px);
   line-height: 1.05;
   white-space: nowrap;
 }
@@ -343,6 +384,17 @@ input:focus {
   line-height: 1.5;
   margin: 14px 0 0;
   padding: 13px 14px;
+}
+
+.easter-egg {
+  background: #f0fbff;
+  border: 1px solid #bde8f3;
+  border-radius: 8px;
+  color: var(--teal);
+  font-weight: 800;
+  line-height: 1.45;
+  margin: 10px 0 0;
+  padding: 11px 14px;
 }
 
 .copy-button {

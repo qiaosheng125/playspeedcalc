@@ -2,7 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 
-const presetSpeeds = [0.75, 1, 1.25, 1.5, 1.75, 2, 2.5, 3];
+const presetSpeeds = [1.25, 1.5, 1.75, 2, 2.5, 3];
 const quickExamples = [
   { label: "Podcast", hours: 0, minutes: 48, seconds: 0 },
   { label: "Course", hours: 2, minutes: 30, seconds: 0 },
@@ -31,8 +31,7 @@ function formatResultDuration(totalSeconds: number): string {
   const minutes = Math.floor((rounded % 3600) / 60);
   const seconds = rounded % 60;
 
-  if (hours > 0 && seconds === 0) return `${hours}h ${minutes}m`;
-  if (hours > 0) return `${hours}h ${minutes}m ${seconds}s`;
+  if (hours > 0) return `${hours}h ${minutes}m`;
   if (minutes > 0 && seconds === 0) return `${minutes}m`;
   if (minutes > 0) return `${minutes}m ${seconds}s`;
   return `${seconds}s`;
@@ -46,6 +45,26 @@ function formatFinishTime(timestamp: number | null, durationSeconds: number): st
     hour: "numeric",
     minute: "2-digit"
   });
+}
+
+function clampSpeed(value: number): number {
+  if (!Number.isFinite(value)) return 1;
+  return Math.max(0.25, Math.round(value * 10) / 10);
+}
+
+function getEasterEgg(speed: number): string {
+  if (speed < 0.4) return "0.3x mode: The audiobook is now a sleepy cloud.";
+  if (speed < 0.6) return "0.5x mode: Tiny snails are taking careful notes.";
+  if (speed < 0.8) return "0.7x mode: Cozy mode, but the blanket has a blanket.";
+  if (speed < 1) return `${speed}x mode: Slow and steady.`;
+  if (speed === 1.5) return "1.5x mode: A comfortable speed boost.";
+  if (speed === 2) return "2x mode: Half the time, same content.";
+  if (speed < 2.5 && speed > 2) return `${speed}x mode: Your queue is getting nervous.`;
+  if (speed < 3 && speed >= 2.5) return `${speed}x mode: The timeline is folding politely.`;
+  if (speed < 4 && speed >= 3) return `${speed}x mode: Fast lane unlocked.`;
+  if (speed < 5 && speed >= 4) return `${speed}x mode: The narrator has entered comet mode.`;
+  if (speed >= 5) return `${speed}x mode: This is no longer listening, this is teleporting.`;
+  return "";
 }
 
 export default function Home() {
@@ -68,12 +87,21 @@ export default function Home() {
   );
 
   const newDuration = originalSeconds > 0 && speed > 0 ? originalSeconds / speed : 0;
-  const savedTime = Math.max(0, originalSeconds - newDuration);
-  const savedPercent = originalSeconds > 0 ? (savedTime / originalSeconds) * 100 : 0;
+  const isSlower = speed < 1;
+  const isSameSpeed = speed === 1;
+  const timeDifference = originalSeconds > 0 ? Math.abs(originalSeconds - newDuration) : 0;
+  const savedPercent = originalSeconds > 0 ? (timeDifference / originalSeconds) * 100 : 0;
   const finishTime = formatFinishTime(currentTime, newDuration);
-  const summary = `At ${speed}x speed, ${formatDuration(originalSeconds)} becomes ${formatDuration(
-    newDuration
-  )}. You save ${formatDuration(savedTime)} (${savedPercent.toFixed(1)}%).`;
+  const summary = isSameSpeed
+    ? `At ${speed}x speed, ${formatDuration(originalSeconds)} stays ${formatDuration(newDuration)}.`
+    : isSlower
+      ? `At ${speed}x speed, ${formatDuration(originalSeconds)} becomes ${formatDuration(
+          newDuration
+        )}. You spend ${formatDuration(timeDifference)} extra (${savedPercent.toFixed(1)}% longer).`
+      : `At ${speed}x speed, ${formatDuration(originalSeconds)} becomes ${formatDuration(
+          newDuration
+        )}. You save ${formatDuration(timeDifference)} (${savedPercent.toFixed(1)}%).`;
+  const easterEgg = getEasterEgg(speed);
 
   const rows = presetSpeeds.map((preset) => ({
     speed: preset,
@@ -167,15 +195,28 @@ export default function Home() {
             <label className="custom-speed">
               Custom speed
               <div className="speed-input">
+                <button
+                  aria-label="Decrease custom speed"
+                  type="button"
+                  onClick={() => setSpeed((current) => clampSpeed(current - 0.1))}
+                >
+                  -
+                </button>
                 <input
                   inputMode="decimal"
                   min="0.25"
                   step="0.1"
                   type="number"
                   value={speed}
-                  onChange={(event) => setSpeed(Number(event.target.value))}
+                  onChange={(event) => setSpeed(clampSpeed(Number(event.target.value)))}
                 />
-                <span>x</span>
+                <button
+                  aria-label="Increase custom speed"
+                  type="button"
+                  onClick={() => setSpeed((current) => clampSpeed(current + 0.1))}
+                >
+                  +
+                </button>
               </div>
             </label>
           </div>
@@ -186,11 +227,11 @@ export default function Home() {
               <strong>{formatResultDuration(newDuration)}</strong>
             </article>
             <article>
-              <span>Time saved</span>
-              <strong>{formatResultDuration(savedTime)}</strong>
+              <span>{isSameSpeed ? "Time difference" : isSlower ? "Extra time" : "Time saved"}</span>
+              <strong>{formatResultDuration(timeDifference)}</strong>
             </article>
             <article>
-              <span>Saved percent</span>
+              <span>{isSameSpeed ? "Change percent" : isSlower ? "Longer percent" : "Saved percent"}</span>
               <strong>{savedPercent.toFixed(1)}%</strong>
             </article>
             <article>
@@ -200,6 +241,11 @@ export default function Home() {
           </div>
 
           <p className="result-sentence">{summary}</p>
+          {easterEgg ? (
+            <p className="easter-egg" aria-live="polite">
+              {easterEgg}
+            </p>
+          ) : null}
 
           <button
             className="copy-button"
