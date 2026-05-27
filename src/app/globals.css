@@ -271,7 +271,7 @@ input:focus {
   align-items: end;
   display: grid;
   gap: 16px;
-  grid-template-columns: 1fr 150px;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 210px);
   margin-top: 18px;
 }
 
@@ -279,11 +279,16 @@ input:focus {
   align-items: center;
   display: flex;
   gap: 8px;
+  max-width: 100%;
 }
 
 .speed-input span {
   color: var(--muted);
   font-weight: 800;
+}
+
+.custom-speed {
+  min-width: 0;
 }
 
 .speed-buttons {
