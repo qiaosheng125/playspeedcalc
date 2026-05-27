@@ -44,12 +44,13 @@
 ## 部署
 
 - [x] GitHub 仓库创建：https://github.com/qiaosheng125/playspeedcalc
-- [ ] Vercel 项目创建。
+- [x] Vercel 项目创建：https://playspeedcalc.vercel.app
 - [ ] 环境变量检查。
 - [x] 域名 DNS 已在阿里云切到 Cloudflare。
 - [x] Cloudflare Nameserver 设置为 `everton.ns.cloudflare.com` 和 `mona.ns.cloudflare.com`。
-- [ ] Cloudflare DNS 配置。
-- [ ] HTTPS 正常。
+- [x] Cloudflare DNS 配置。
+- [x] 正式域名可访问：https://playspeedcalc.net
+- [x] HTTPS 正常。
 
 ## 上线后
 
@@ -57,5 +58,5 @@
 - [ ] 提交 sitemap 到 Bing Webmaster。
 - [ ] 手动访问所有页面。
 - [ ] 手机访问检查。
-- [ ] 记录上线日期。
+- [x] 记录上线日期：2026-05-28。
 - [ ] 7 天后复盘。

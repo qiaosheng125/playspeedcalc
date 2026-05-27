@@ -76,3 +76,12 @@
 - 拼写不容易错。
 - 和 `playback speed calculator`（播放速度计算器）主词有关。
 - 后续能扩展到有声书、播客、课程、视频。
+
+## 上线记录
+
+- 购买平台：阿里云。
+- DNS：已切到 `Cloudflare`（DNS 和安全服务）。
+- 部署平台：`Vercel`（部署平台）。
+- Vercel 临时域名：`https://playspeedcalc.vercel.app`。
+- 正式域名：`https://playspeedcalc.net`。
+- 状态：2026-05-28 已可正常访问，HTTPS 正常。
