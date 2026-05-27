@@ -37,8 +37,8 @@
 
 - [ ] `GSC`（谷歌搜索控制台）准备提交。
 - [ ] `Bing Webmaster`（必应站长工具）准备提交。
-- [ ] `GA`（谷歌分析）接入。
-- [ ] `Clarity`（微软热力图）接入。
+- [ ] `GA`（谷歌分析）接入，代码已预留 `NEXT_PUBLIC_GA_MEASUREMENT_ID`。
+- [ ] `Clarity`（微软热力图）接入，代码已预留 `NEXT_PUBLIC_CLARITY_PROJECT_ID`。
 - [ ] 核心计算事件可记录。
 
 ## 部署
