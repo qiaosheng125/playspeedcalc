@@ -21,7 +21,22 @@ export const metadata: Metadata = {
       "Calculate media duration, time saved, and finish time for audiobooks, podcasts, courses, and videos.",
     url: siteUrl,
     siteName: "PlaySpeedCalc",
-    type: "website"
+    type: "website",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "PlaySpeedCalc playback speed calculator preview"
+      }
+    ]
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Playback Speed Calculator",
+    description:
+      "Calculate media duration, time saved, and finish time for audiobooks, podcasts, courses, and videos.",
+    images: ["/opengraph-image"]
   }
 };
 
