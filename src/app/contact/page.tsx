@@ -11,8 +11,10 @@ export default function ContactPage() {
       </div>
       <div>
         <p>
-          For questions, feedback, or bug reports, contact the site owner at the email address that
-          will be added after domain email routing is configured.
+          For questions, feedback, or bug reports, email{" "}
+          <a href="mailto:support@playspeedcalc.net">support@playspeedcalc.net</a>.
+          Include the browser, device, input values, and the result you expected.
+          Do not send passwords, private files, or sensitive personal data.
         </p>
       </div>
     </main>

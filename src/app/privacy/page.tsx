@@ -18,6 +18,11 @@ export default function PrivacyPage() {
           We may use privacy-friendly analytics to understand aggregate traffic and improve the
           site. We do not sell personal information.
         </p>
+        <p>
+          If you email <a href="mailto:support@playspeedcalc.net">support@playspeedcalc.net</a>,
+          your email address and message are used only to respond to your request
+          and improve the site.
+        </p>
       </div>
     </main>
   );
