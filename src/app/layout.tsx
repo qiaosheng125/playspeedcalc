@@ -12,9 +12,6 @@ export const metadata: Metadata = {
   },
   description:
     "Calculate how long an audiobook, podcast, course, or video will take at 1.25x, 1.5x, 2x, or any playback speed. See time saved and finish time instantly.",
-  alternates: {
-    canonical: "/"
-  },
   openGraph: {
     title: "Playback Speed Calculator",
     description:
