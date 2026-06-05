@@ -259,6 +259,46 @@ input:focus {
   outline: none;
 }
 
+.duration-input {
+  align-items: center;
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 36px;
+  max-width: 100%;
+}
+
+.duration-input input {
+  border-left: 0;
+  border-radius: 0;
+  border-right: 0;
+  min-width: 0;
+  padding: 0 8px;
+  text-align: center;
+}
+
+.duration-input button {
+  align-items: center;
+  background: #f2f5fa;
+  border: 1px solid #cfd7e6;
+  color: var(--ink);
+  cursor: pointer;
+  display: flex;
+  font-size: 18px;
+  font-weight: 800;
+  height: 48px;
+  justify-content: center;
+  line-height: 1;
+  padding: 0;
+  width: 36px;
+}
+
+.duration-input button:first-child {
+  border-radius: 6px 0 0 6px;
+}
+
+.duration-input button:last-child {
+  border-radius: 0 6px 6px 0;
+}
+
 .field-title {
   color: var(--muted);
   display: block;

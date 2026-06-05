@@ -71,11 +71,12 @@ function formatFinishTime(timestamp: number | null, durationSeconds: number): st
 
 function clampSpeed(value: number): number {
   if (!Number.isFinite(value)) return 1;
-  return Math.max(0.25, Math.round(value * 10) / 10);
+  return Math.max(0.25, Math.round(value * 100) / 100);
 }
 
 function formatSpeedInput(value: number): string {
-  return Number.isInteger(value) ? String(value) : value.toFixed(1);
+  if (Number.isInteger(value)) return String(value);
+  return value.toFixed(2).replace(/0$/, "");
 }
 
 function getEasterEggOptions(speed: number): string[] {
@@ -228,6 +229,19 @@ export function HomeCalculator() {
     setHours(nextHours === null ? "" : String(nextHours));
   }
 
+  function setDurationFromTotalSeconds(totalSeconds: number) {
+    const normalized = normalizeDurationParts(totalSeconds);
+    setHours(normalized.hours);
+    setMinutes(normalized.minutes);
+    setSeconds(normalized.seconds);
+  }
+
+  function stepDuration(deltaSeconds: number) {
+    setDurationFromTotalSeconds(
+      toNumber(hours) * 3600 + toNumber(minutes) * 60 + toNumber(seconds) + deltaSeconds
+    );
+  }
+
   function handleMinutesChange(value: string) {
     const nextMinutes = toWholeNumber(value);
     if (nextMinutes === null) {
@@ -310,36 +324,81 @@ export function HomeCalculator() {
           <div className="duration-grid" aria-label="Original duration">
             <label>
               Hours
-              <input
-                inputMode="numeric"
-                min="0"
-                step="1"
-                type="number"
-                value={hours}
-                onChange={(event) => handleHoursChange(event.target.value)}
-              />
+              <div className="duration-input">
+                <button
+                  aria-label="Decrease hours"
+                  type="button"
+                  onClick={() => stepDuration(-3600)}
+                >
+                  -
+                </button>
+                <input
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  type="text"
+                  value={hours}
+                  onChange={(event) => handleHoursChange(event.target.value)}
+                />
+                <button
+                  aria-label="Increase hours"
+                  type="button"
+                  onClick={() => stepDuration(3600)}
+                >
+                  +
+                </button>
+              </div>
             </label>
             <label>
               Minutes
-              <input
-                inputMode="numeric"
-                min="0"
-                step="5"
-                type="number"
-                value={minutes}
-                onChange={(event) => handleMinutesChange(event.target.value)}
-              />
+              <div className="duration-input">
+                <button
+                  aria-label="Decrease minutes"
+                  type="button"
+                  onClick={() => stepDuration(-300)}
+                >
+                  -
+                </button>
+                <input
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  type="text"
+                  value={minutes}
+                  onChange={(event) => handleMinutesChange(event.target.value)}
+                />
+                <button
+                  aria-label="Increase minutes"
+                  type="button"
+                  onClick={() => stepDuration(300)}
+                >
+                  +
+                </button>
+              </div>
             </label>
             <label>
               Seconds
-              <input
-                inputMode="numeric"
-                min="0"
-                step="30"
-                type="number"
-                value={seconds}
-                onChange={(event) => handleSecondsChange(event.target.value)}
-              />
+              <div className="duration-input">
+                <button
+                  aria-label="Decrease seconds"
+                  type="button"
+                  onClick={() => stepDuration(-30)}
+                >
+                  -
+                </button>
+                <input
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  type="text"
+                  value={seconds}
+                  onChange={(event) => handleSecondsChange(event.target.value)}
+                />
+                <button
+                  aria-label="Increase seconds"
+                  type="button"
+                  onClick={() => stepDuration(30)}
+                >
+                  +
+                </button>
+              </div>
             </label>
           </div>
 
@@ -371,13 +430,14 @@ export function HomeCalculator() {
                   -
                 </button>
                 <input
+                  aria-label="Custom speed"
                   inputMode="decimal"
-                  min="0.25"
-                  step="0.1"
-                  type="number"
+                  pattern="[0-9]*[.]?[0-9]*"
+                  type="text"
                   value={speedInput}
                   onBlur={handleSpeedInputBlur}
                   onChange={(event) => handleSpeedInputChange(event.target.value)}
+                  onInput={(event) => handleSpeedInputChange(event.currentTarget.value)}
                 />
                 <button
                   aria-label="Increase custom speed"
