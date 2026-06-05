@@ -558,14 +558,14 @@ footer div {
   }
 
   .speed-buttons {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow-x: visible;
     padding-bottom: 4px;
   }
 
   .speed-buttons button {
-    flex: 0 0 72px;
+    min-width: 0;
   }
 
   .input-grid,
